@@ -225,10 +225,10 @@
     const isIn = s.waiting_for === 'departure';
     rows.push({
       dot: isIn ? 'green' : 'yellow',
-      label: isIn ? '✅ Someone is home' : '⏳ No one home yet',
+      label: isIn ? '✅ Someone is home' : '⏳ Waiting for arrival button push',
       value: isIn
-        ? (s.arrived_at ? 'Arrived at ' + s.arrived_at : 'Currently home')
-        : (s.last_departed_at ? 'Last left at ' + s.last_departed_at : 'Waiting for arrival button')
+        ? (s.arrived_at ? 'Arrived at ' + s.arrived_at : '⏳ Waiting for departure button push')
+        : (s.last_departed_at ? 'Last left at ' + s.last_departed_at : 'Waiting for arrival button push')
     });
 
     // Last visit duration
