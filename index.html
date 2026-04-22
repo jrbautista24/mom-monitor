@@ -225,7 +225,7 @@
     const isIn = s.waiting_for === 'departure';
     rows.push({
       dot: isIn ? 'green' : 'yellow',
-      label: isIn ? '✅ Someone is home' : '⏳ Waiting for arrival button push',
+      label: isIn ? '✅ Has arrived, waiting for departure button push' : '⏳ Waiting for arrival button push',
       value: isIn
         ? (s.arrived_at ? 'Arrived at ' + s.arrived_at : '⏳ Waiting for departure button push')
         : (s.last_departed_at ? 'Last left at ' + s.last_departed_at : 'Waiting for arrival button push')
