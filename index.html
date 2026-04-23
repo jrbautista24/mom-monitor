@@ -231,6 +231,7 @@
   const API = 'https://contact.nogginconsultingllc.com/api/state';
   const FAIL_THRESHOLD = 5;   // show error only after this many consecutive failures
   let failCount = 0;
+  let retryDisplay = 0;
   let hasGoodData = false;
 
   async function fetchStatus() {
@@ -239,6 +240,7 @@
       if (!res.ok) throw new Error('bad response');
       const d = await res.json();
       failCount = 0;
+      retryDisplay = 0;
       hasGoodData = true;
       document.getElementById('reconnect-notice').style.display = 'none';
       renderStatus(d);
@@ -251,6 +253,7 @@
         document.getElementById('updated').textContent = 'Last updated at ' + now + ' — reconnecting…';
       } else if (failCount >= FAIL_THRESHOLD) {
         // Wipe screen after several consecutive failures; re-render each cycle so count updates
+        retryDisplay = Math.min(retryDisplay + 1, FAIL_THRESHOLD);
         document.getElementById('reconnect-notice').style.display = 'none';
         showError();
       }
@@ -322,7 +325,7 @@
       <div class="s-row">
         <div class="dot yellow"></div>
         <div>
-          <div class="s-label">Could not load status <span style="font-size:0.95rem;font-weight:700;color:var(--orange);">(retry ${failCount})</span></div>
+          <div class="s-label">Could not load status <span style="font-size:0.95rem;font-weight:700;color:var(--orange);">(retry ${retryDisplay} of ${FAIL_THRESHOLD})</span></div>
           <div class="s-value">Open the Full Dashboard to check</div>
         </div>
       </div>
